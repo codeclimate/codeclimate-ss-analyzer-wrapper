@@ -1,6 +1,0 @@
-{
-  "enabled": true,
-  "config": {
-    "sonar.java.source": "1.6"
-  }
-}

@@ -1,6 +1,6 @@
 .PHONY: image test
 
-IMAGE_NAME ?= codeclimate/codeclimate-sonar-java
+IMAGE_NAME ?= codeclimate/sonar-wrapper
 
 image:
 	docker build --rm -t $(IMAGE_NAME) .

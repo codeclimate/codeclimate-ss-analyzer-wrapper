@@ -2,9 +2,6 @@ FROM java:8-jdk-alpine
 
 MAINTAINER Code Climate
 
-RUN adduser -u 9000 -D app
-VOLUME /code
-
 # Increase Java memory limits
 ENV JAVA_OPTS="-XX:+UseParNewGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -Xss4096k"
 
@@ -33,10 +30,5 @@ COPY build.gradle ./
 RUN gradle infra
 
 COPY . ./
-RUN chown -R app:app ./
 
 RUN gradle clean build -x test
-
-USER app
-WORKDIR /code
-CMD ["/usr/src/app/build/codeclimate-sonar", "/code", "/config.json"]
