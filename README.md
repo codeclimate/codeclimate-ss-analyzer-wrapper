@@ -1,6 +1,8 @@
 # Code Climate Sonar Wrapper
 
 [![CircleCI](https://circleci.com/gh/codeclimate/sonar-wrapper.svg?style=svg&circle-token=c84150ff05586b0a4671cc70858f24e43d50b10f)](https://circleci.com/gh/codeclimate/sonar-wrapper)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fcbade685d34b8dbb648/maintainability)](https://codeclimate.com/github/codeclimate/sonar-wrapper/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/fcbade685d34b8dbb648/test_coverage)](https://codeclimate.com/github/codeclimate/sonar-wrapper/test_coverage)
 
 `sonar-wrapper` is the base library for Sonar based engines.
 It wraps [Sonarlint](http://www.sonarlint.org) in standalone mode.
