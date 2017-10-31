@@ -17,7 +17,7 @@ task copyTestLibs(type: Copy) {
 
 task copyPlugins(type: Copy) {
     into "${buildDir}/plugins"
-    from configurations.runtime
+    from configurations.testCompile
     include "sonar-*-plugin*.jar"
 }
 
@@ -38,7 +38,7 @@ dependencies {
     compile("com.google.code.gson:gson:2.8.2")
 
     // Plugins
-    compile("org.sonarsource.java:sonar-java-plugin:4.14.0.11784")
+    testCompile("org.sonarsource.java:sonar-java-plugin:4.14.0.11784")
 
     testCompile("org.assertj:assertj-core:2.8.0")
     testCompile("org.skyscreamer:jsonassert:1.5.0")
