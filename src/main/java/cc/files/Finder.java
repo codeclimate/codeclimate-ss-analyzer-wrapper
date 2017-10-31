@@ -38,7 +38,7 @@ public class Finder extends InputFileFinder {
         List<Path> paths = new ArrayList<>();
         for (String path : includedPaths) {
             Path resolvedPath = baseDir.resolve(path);
-            if (isDirectory(resolvedPath)) {
+            if (resolvedPath.toFile().isDirectory()) {
                 paths.addAll(collectDir(baseDir, resolvedPath));
             } else {
                 paths.add(resolvedPath);
