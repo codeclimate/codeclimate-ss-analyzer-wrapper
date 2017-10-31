@@ -11,11 +11,9 @@ make test
 ## Usage
 
 You can use the [codeclimate-sonar-php](https://github.com/codeclimate/codeclimate-sonar-php) repo as an example for building a new sonar based engine.
-The important aspects are listed below.
+The important aspects are listed below:
 
-### Library
-
-Make sure your `build.gradle` has the following entries:
+1. Use this wrapper lib. Make sure your `build.gradle` has the following entries:
 ```groovy
 repositories {
   jcenter()
@@ -26,10 +24,7 @@ dependencies {
   compile("com.github.codeclimate:sonar-wrapper:master-SNAPSHOT")
 }
 ```
-
-### Plugin
-
-Add the plugin lib and make sure it is copied to `build/plugins`:
+2.  Add the plugin lib and make sure it is copied to the `build/plugins` directory as part of the `build` task:
 ```groovy
 task copyPlugins(type: Copy) {
   into "${buildDir}/plugins"
@@ -41,13 +36,11 @@ build.dependsOn(copyPlugins)
 
 dependencies {
   // ...
-  testCompile("org.sonarsource.java:sonar-java-plugin:4.14.0.11784")
+  compile("org.sonarsource.php:sonar-php-plugin:2.10.0.2087")
 }
 ```
-
-### Running
-
-The wrapper overrides a few classes from the sonar libraries which makes classpath order something very important to pay attention:
+3. Running: The wrapper overrides a few classes from the sonar libraries which makes classpath order something very important to pay attention:
+`bin/codeclimate-sonar`:
 ```sh
 #!/usr/bin/env sh
 
@@ -70,6 +63,7 @@ java \
   -Dorg.freemarker.loggerLibrary=none  \
   cc.App $@
 ```
+`bin/codeclimate-sonar /code /config.json`
 
 ## Sonar Documentation
 
