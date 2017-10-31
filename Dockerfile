@@ -12,7 +12,6 @@ ENV GRADLE_USER_HOME=$GRADLE_HOME
 ENV PATH=$GRADLE_HOME/bin:$PATH
 
 RUN mkdir -p $GRADLE_USER_HOME && \
-      chown -R app:app $GRADLE_USER_HOME && \
       chmod g+s $GRADLE_USER_HOME && \
       apk update && \
       apk add --virtual .build-dependencies ca-certificates wget && \
