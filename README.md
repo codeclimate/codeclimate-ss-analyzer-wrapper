@@ -1,15 +1,7 @@
-# Code Climate Sonar-Java Engine
+# Code Climate Sonar Wrapper
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/1ad407dbd79378cf4b07/maintainability)](https://codeclimate.com/repos/59e0f09e141c6104f9000002/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/1ad407dbd79378cf4b07/test_coverage)](https://codeclimate.com/repos/59e0f09e141c6104f9000002/test_coverage)
-[![CircleCI](https://circleci.com/gh/codeclimate/codeclimate-sonar-java.svg?style=svg&circle-token=b800791f4e3af9079991ef70f3871f0ce09ccc81)](https://circleci.com/gh/codeclimate/codeclimate-sonar-java)
-
-`codeclimate-sonar-java` is a Code Climate engine that wraps [Sonarlint](http://www.sonarlint.org) in standalone mode.
-
-## Installation
-```
-make image
-```
+`sonar-wrapper` is the base library for Sonar based engines.
+It wraps [Sonarlint](http://www.sonarlint.org) in standalone mode.
 
 ## Tests
 ```
@@ -18,54 +10,65 @@ make test
 
 ## Usage
 
-1. If you haven't already, [install the Code Climate CLI](https://github.com/codeclimate/codeclimate).
-2. Configure a `.codeclimate.yml` file in your repo.
-```yml
-engines:
-  sonar-java:
-    enabled: true
-    config:
-      sonar.java.source: 7
-      tests_patterns:
-        - src/test/**
-exclude_paths:
-  - build/
-```
-3. Run `codeclimate analyze`.
+You can use the [codeclimate-sonar-php](https://github.com/codeclimate/codeclimate-sonar-php) repo as an example for building a new sonar based engine.
+The important aspects are listed below.
 
-## Custom configurations
+### Library
 
-### Java source version
-It is possible to specifcy a Java version the code should be compliant to, it helps Sonar to use the proper rules.
-```
-engines:
-  sonar-java:
-    enabled: true
-    config:
-      sonar.java.source: 7
+Make sure your `build.gradle` has the following entries:
+```groovy
+repositories {
+  jcenter()
+  maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+  compile("com.github.codeclimate:sonar-wrapper:master-SNAPSHOT")
+}
 ```
 
-### Tests
-Specifying where the test classes are helps Sonar to use specific rules for those files.
-```
-engines:
-  sonar-java:
-    enabled: true
-    config:
-      tests_patterns:
-        - src/test/**
-        - app/src/test/**
+### Plugin
+
+Add the plugin lib and make sure it is copied to `build/plugins`:
+```groovy
+task copyPlugins(type: Copy) {
+  into "${buildDir}/plugins"
+  from configurations.testCompile
+  include "sonar-*-plugin*.jar"
+}
+
+build.dependsOn(copyPlugins)
+
+dependencies {
+  // ...
+  testCompile("org.sonarsource.java:sonar-java-plugin:4.14.0.11784")
+}
 ```
 
-### Severity
-Ignore issues with severity below the minimum:
-```
-engines:
-  sonar-java:
-    enabled: true
-    config:
-      minimum_severity: critical  # default: major
-                                  # valid values are: info, minor, major, critical, blocker
+### Running
+
+The wrapper overrides a few classes from the sonar libraries which makes classpath order something very important to pay attention:
+```sh
+#!/usr/bin/env sh
+
+BUILD_DIR=$(dirname $0)
+APP=$(find ${BUILD_DIR}/libs -name "codeclimate-sonar-php.jar" | head -n1)
+WRAPPER=$(find ${BUILD_DIR}/libs -name "sonar-wrapper*.jar" | head -n1)
+CORE=$(find ${BUILD_DIR}/libs -name "sonarlint-core*.jar" -or -name "sonarlint-client-api*.jar" | tr "\n" ":")
+LIBS=$(find ${BUILD_DIR}/libs -name "*.jar" | tr "\n" ":")
+
+CODE_DIR=$1; shift
+CONFIG_FILE=$1; shift
+
+java \
+  -noverify \
+  -cp ${APP}:${WRAPPER}:${CORE}:${LIBS} \
+  -Djava.awt.headless=true  \
+  -Dsonarlint.home="${BUILD_DIR}"  \
+  -Dproject.home="${CODE_DIR}"  \
+  -Dconfig="${CONFIG_FILE}"  \
+  -Dorg.freemarker.loggerLibrary=none  \
+  cc.App $@
 ```
 
 ## Sonar Documentation
