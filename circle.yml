@@ -1,0 +1,23 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - >
+      docker run
+      --env CIRCLE_BRANCH
+      --env CIRCLE_PROJECT_REPONAME
+      --env CIRCLE_TOKEN
+      --env GCR_JSON_KEY
+      --volume /var/run/docker.sock:/var/run/docker.sock
+      codeclimate/patrick pull || true
+    - make image
+
+test:
+  override:
+    - make test
+
+notify:
+  webhooks:
+    - url: https://cc-slack-proxy.herokuapp.com/circle

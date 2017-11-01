@@ -1,0 +1,47 @@
+apply plugin: "java"
+
+repositories {
+    jcenter()
+}
+
+task copyLibs(type: Copy) {
+    into "${buildDir}/libs"
+    from configurations.runtime
+}
+
+task copyTestLibs(type: Copy) {
+    into "${buildDir}/test"
+    from configurations.testCompile
+}
+
+task copyPlugins(type: Copy) {
+    into "${buildDir}/plugins"
+    from configurations.testCompile
+    include "sonar-*-plugin*.jar"
+}
+
+task infra(dependsOn: ["copyLibs", "copyTestLibs", "jar"])
+
+test.dependsOn(copyPlugins)
+
+dependencies {
+    compile("org.sonarsource.sonarlint.core:sonarlint-core:2.17.0.899")
+    compile("org.sonarsource.sonarlint.core:sonarlint-client-api:2.17.0.899")
+    compile("org.sonarsource.sonarlint:sonarlint-cli:2.1.0.566")
+    compile("com.google.code.gson:gson:2.8.2")
+
+    // Plugins
+    testCompile("org.sonarsource.java:sonar-java-plugin:4.14.0.11784")
+
+    testCompile("org.assertj:assertj-core:2.8.0")
+    testCompile("org.skyscreamer:jsonassert:1.5.0")
+    testCompile("junit:junit:4.12")
+}
+
+test {
+    outputs.upToDateWhen { false }
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+        exceptionFormat "full"
+    }
+}
