@@ -1,4 +1,4 @@
-# Code Climate Sonar Wrapper
+# Code Climate SS Analyzer Wrapper
 
 [![CircleCI](https://circleci.com/gh/codeclimate/sonar-wrapper.svg?style=svg&circle-token=c84150ff05586b0a4671cc70858f24e43d50b10f)](https://circleci.com/gh/codeclimate/sonar-wrapper)
 [![Maintainability](https://api.codeclimate.com/v1/badges/fcbade685d34b8dbb648/maintainability)](https://codeclimate.com/github/codeclimate/sonar-wrapper/maintainability)
@@ -72,10 +72,13 @@ java \
 ## Sonar Documentation
 
 http://www.sonarlint.org/commandline
+
 http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
 
 Issue Tracker: http://jira.sonarsource.com/browse/SLCLI
 
 ## Copyright
+
+This engine is developed by Code Climate using [SonarLint](http://www.sonarlint.org/commandline), it is not endorsed by SonarSoruce.
 
 See [LICENSE](LICENSE)
