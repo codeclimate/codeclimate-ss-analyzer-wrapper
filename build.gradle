@@ -32,7 +32,7 @@ dependencies {
     compile("com.google.code.gson:gson:2.8.2")
 
     // Plugins
-    testCompile("org.sonarsource.java:sonar-java-plugin:5.14.0.18788")
+    testCompile("org.sonarsource.java:sonar-java-plugin:6.0.0.20538")
 
     testCompile("org.assertj:assertj-core:2.8.0")
     testCompile("org.skyscreamer:jsonassert:1.5.0")
