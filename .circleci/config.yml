@@ -1,0 +1,18 @@
+version: 2.1
+
+jobs:
+  build:
+    machine:
+      docker_layer_caching: true
+    working_directory: ~/codeclimate/codeclimate-ss-analyzer-wrapper
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: make image
+      - run:
+          name: Test
+          command: make test
+notify:
+  webhooks:
+    - url: https://cc-slack-proxy.herokuapp.com/circle
