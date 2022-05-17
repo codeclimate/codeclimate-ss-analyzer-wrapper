@@ -17,8 +17,4 @@ public class Factory {
     public static RuleDetails createRule(String key) {
         return sonarlint().getRuleDetails("java:" + key).get();
     }
-
-    public static Collection<RuleDetails> getAllRules() {
-        return sonarlint().getAllRuleDetails();
-    }
 }
