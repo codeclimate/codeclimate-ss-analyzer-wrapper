@@ -6,6 +6,7 @@ import org.sonarlint.cli.report.ReportFactory;
 import org.sonarsource.sonarlint.core.client.api.common.ProgressMonitor;
 import org.sonarsource.sonarlint.core.client.api.common.analysis.AnalysisResults;
 import org.sonarsource.sonarlint.core.client.api.common.analysis.ClientInputFile;
+import org.sonarsource.sonarlint.core.client.api.common.RuleDetails;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneAnalysisConfiguration;
 import org.sonarsource.sonarlint.core.client.api.standalone.StandaloneSonarLintEngine;
 import org.sonarsource.sonarlint.core.tracking.IssueTrackable;
@@ -35,10 +36,19 @@ public class StandaloneSonarLint extends org.sonarlint.cli.analysis.StandaloneSo
         Date start = new Date();
 
         IssueCollector collector = new IssueCollector();
-        StandaloneAnalysisConfiguration config = new StandaloneAnalysisConfiguration(baseDirPath, workDir, inputFiles, properties);
+        StandaloneAnalysisConfiguration config = StandaloneAnalysisConfiguration.builder()
+                                                  .setBaseDir(baseDirPath)
+                                                  .putAllExtraProperties(properties)
+                                                  .addInputFiles(inputFiles)
+                                                  .build();
         AnalysisResults result = engine.analyze(config, collector, logWrapper, new NoOpProgressMonitor());
         Collection<Trackable> trackables = collector.get().stream().map(IssueTrackable::new).collect(Collectors.toList());
         generateReports(trackables, result, reportFactory, baseDirPath.getFileName().toString(), baseDirPath, start);
+    }
+
+    @Override
+    protected RuleDetails getRuleDetails(String ruleKey) {
+      return engine.getRuleDetails(ruleKey).get();
     }
 
     private static class NoOpProgressMonitor extends ProgressMonitor {

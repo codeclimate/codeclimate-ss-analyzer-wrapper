@@ -1,5 +1,6 @@
 package support;
 
+import java.util.Collection;
 import cc.analysis.SonarLintFactory;
 import org.sonarlint.cli.analysis.LogOutputWrapper;
 import org.sonarsource.sonarlint.core.StandaloneSonarLintEngineImpl;
@@ -14,6 +15,10 @@ public class Factory {
     }
 
     public static RuleDetails createRule(String key) {
-        return sonarlint().getRuleDetails("squid:" + key);
+        return sonarlint().getRuleDetails("java:" + key).get();
+    }
+
+    public static Collection<RuleDetails> getAllRules() {
+        return sonarlint().getAllRuleDetails();
     }
 }

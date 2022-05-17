@@ -25,14 +25,15 @@ task infra(dependsOn: ["copyLibs", "copyTestLibs", "jar"])
 test.dependsOn(copyPlugins)
 
 dependencies {
-    compile("org.sonarsource.sonarlint.core:sonarlint-core:3.0.1.1181")
-    compile("org.sonarsource.sonarlint.core:sonarlint-client-api:3.0.1.1181")
+    compile("org.sonarsource.sonarlint.core:sonarlint-core:4.6.0.2652")
+    compile("org.sonarsource.sonarlint.core:sonarlint-client-api:4.6.0.2652")
 
     compile("org.sonarsource.sonarlint:sonarlint-cli:2.1.0.566")
     compile("com.google.code.gson:gson:2.8.2")
+    compile("com.google.code.findbugs:jsr305:3.0.2")
 
     // Plugins
-    testCompile("org.sonarsource.java:sonar-java-plugin:5.14.0.18788")
+    testCompile("org.sonarsource.java:sonar-java-plugin:6.12.0.24852")
 
     testCompile("org.assertj:assertj-core:2.8.0")
     testCompile("org.skyscreamer:jsonassert:1.5.0")

@@ -55,12 +55,12 @@ public class CategoriesTest {
 
     @Test
     public void set_style_for_convention_code_smells() throws Exception {
-        assertThat(getCategoriesForRule("S00115")).contains(Categories.Category.STYLE);
+        assertThat(getCategoriesForRule("S115")).contains(Categories.Category.STYLE);
     }
 
     @Test
     public void set_style_for_style_code_smells() throws Exception {
-        assertThat(getCategoriesForRule("S00122")).contains(Categories.Category.STYLE);
+        assertThat(getCategoriesForRule("S122")).contains(Categories.Category.STYLE);
     }
 
     @Test
