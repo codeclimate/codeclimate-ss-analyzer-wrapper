@@ -78,6 +78,11 @@ public class CategoriesTest {
         assertThat(getCategoriesForRule("S1186")).contains(Categories.Category.BUG_RISK);
     }
 
+    @Test
+    public void set_clarity_for_single_line_text_blocks() throws Exception {
+        assertThat(getCategoriesForRule("S5663")).contains(Categories.Category.CLARITY);
+    }
+
     private Categories getCategoriesForRule(String key) {
         RuleDetails rule = Factory.createRule(key);
         return Categories.from(rule);
