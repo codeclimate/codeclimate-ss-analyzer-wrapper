@@ -6,17 +6,17 @@ repositories {
 
 task copyLibs(type: Copy) {
     into "${buildDir}/libs"
-    from configurations.runtime
+    from configurations.runtimeClasspath
 }
 
 task copyTestLibs(type: Copy) {
     into "${buildDir}/test"
-    from configurations.testCompile
+    from configurations.testRuntimeClasspath
 }
 
 task copyPlugins(type: Copy) {
     into "${buildDir}/plugins"
-    from configurations.testCompile
+    from configurations.testRuntimeClasspath
     include "sonar-*-plugin*.jar"
 }
 
@@ -25,19 +25,19 @@ task infra(dependsOn: ["copyLibs", "copyTestLibs", "jar"])
 test.dependsOn(copyPlugins)
 
 dependencies {
-    compile("org.sonarsource.sonarlint.core:sonarlint-core:4.6.0.2652")
-    compile("org.sonarsource.sonarlint.core:sonarlint-client-api:4.6.0.2652")
+    implementation("org.sonarsource.sonarlint.core:sonarlint-core:4.6.0.2652")
+    implementation("org.sonarsource.sonarlint.core:sonarlint-client-api:4.6.0.2652")
 
-    compile("org.sonarsource.sonarlint:sonarlint-cli:2.1.0.566")
-    compile("com.google.code.gson:gson:2.8.2")
-    compile("com.google.code.findbugs:jsr305:3.0.2")
+    implementation("org.sonarsource.sonarlint:sonarlint-cli:2.1.0.566")
+    implementation("com.google.code.gson:gson:2.8.2")
+    implementation("com.google.code.findbugs:jsr305:3.0.2")
 
     // Plugins
-    testCompile("org.sonarsource.java:sonar-java-plugin:6.12.0.24852")
+    testImplementation("org.sonarsource.java:sonar-java-plugin:6.12.0.24852")
 
-    testCompile("org.assertj:assertj-core:2.8.0")
-    testCompile("org.skyscreamer:jsonassert:1.5.0")
-    testCompile("junit:junit:4.12")
+    testImplementation("org.assertj:assertj-core:2.8.0")
+    testImplementation("org.skyscreamer:jsonassert:1.5.0")
+    testImplementation("junit:junit:4.12")
 }
 
 test {
