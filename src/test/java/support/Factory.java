@@ -1,6 +1,5 @@
 package support;
 
-import java.util.Collection;
 import cc.analysis.SonarLintFactory;
 import org.sonarlint.cli.analysis.LogOutputWrapper;
 import org.sonarsource.sonarlint.core.StandaloneSonarLintEngineImpl;
