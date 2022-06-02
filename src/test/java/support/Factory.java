@@ -14,6 +14,6 @@ public class Factory {
     }
 
     public static RuleDetails createRule(String key) {
-        return sonarlint().getRuleDetails("squid:" + key);
+        return sonarlint().getRuleDetails("java:" + key).get();
     }
 }

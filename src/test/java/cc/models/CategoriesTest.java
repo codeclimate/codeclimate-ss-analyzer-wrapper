@@ -55,12 +55,12 @@ public class CategoriesTest {
 
     @Test
     public void set_style_for_convention_code_smells() throws Exception {
-        assertThat(getCategoriesForRule("S00115")).contains(Categories.Category.STYLE);
+        assertThat(getCategoriesForRule("S115")).contains(Categories.Category.STYLE);
     }
 
     @Test
     public void set_style_for_style_code_smells() throws Exception {
-        assertThat(getCategoriesForRule("S00122")).contains(Categories.Category.STYLE);
+        assertThat(getCategoriesForRule("S122")).contains(Categories.Category.STYLE);
     }
 
     @Test
@@ -76,6 +76,11 @@ public class CategoriesTest {
     @Test
     public void set_bug_risk_for_suspicious_code_smells() throws Exception {
         assertThat(getCategoriesForRule("S1186")).contains(Categories.Category.BUG_RISK);
+    }
+
+    @Test
+    public void set_clarity_for_single_line_text_blocks() throws Exception {
+        assertThat(getCategoriesForRule("S5663")).contains(Categories.Category.CLARITY);
     }
 
     private Categories getCategoriesForRule(String key) {

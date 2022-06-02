@@ -6,6 +6,8 @@ import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
+import java.net.URI;
 
 public class FakeClientInputFile implements ClientInputFile {
     String path;
@@ -44,5 +46,15 @@ public class FakeClientInputFile implements ClientInputFile {
     @Override
     public String contents() throws IOException {
         return null;
+    }
+
+    @Override
+    public String relativePath() {
+        return null;
+    }
+
+    @Override
+    public URI uri() {
+        return Paths.get(getPath()).toUri();
     }
 }

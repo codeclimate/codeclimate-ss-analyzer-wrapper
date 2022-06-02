@@ -27,7 +27,7 @@ public class FakeRuleDetails implements RuleDetails {
     }
 
     @Override
-    public String getLanguage() {
+    public String getLanguageKey() {
         return null;
     }
 
@@ -50,5 +50,10 @@ public class FakeRuleDetails implements RuleDetails {
     @Override
     public String getExtendedDescription() {
         return null;
+    }
+
+    @Override
+    public boolean isActiveByDefault() {
+        return true;
     }
 }
