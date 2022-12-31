@@ -82,3 +82,4 @@ Issue Tracker: http://jira.sonarsource.com/browse/SLCLI
 This repository is maintained by CodeClimate. It uses [SonarLint](http://www.sonarlint.org/commandline), which is a SonarSource product. This is not endorsed by SonarSource.
 
 See [LICENSE](LICENSE)
+test
